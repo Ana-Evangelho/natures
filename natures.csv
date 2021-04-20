@@ -1,0 +1,26 @@
+Nature,Increased,Decreased
+Hardy,Attack,Attack
+Lonely,Attack,Defense
+Adamant,Attack,Sp. Atk
+Naughty,Attack,Sp. Def
+Brave,Attack,Speed
+Bold,Defense,Attack
+Docile,Defense,Defense
+Impish,Defense,Sp. Atk
+Lax,Defense,Sp. Def
+Relaxed,Defense,Speed
+Modest,Sp. Atk,Attack
+Mild,Sp. Atk,Defense
+Bashful,Sp. Atk,Sp. Atk
+Rash,Sp. Atk,Sp. Def
+Quiet,Sp. Atk,Speed
+Calm,Sp. Def,Attack
+Gentle,Sp. Def,Defense
+Careful,Sp. Def,Sp. Atk
+Quirky,Sp. Def,Sp. Def
+Sassy,Sp. Def,Speed
+Timid,Speed,Attack
+Hasty,Speed,Defense
+Jolly,Speed,Sp. Atk
+Naive,Speed,Sp. Def
+Serious,Speed,Speed
