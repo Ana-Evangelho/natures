@@ -1,0 +1,170 @@
+# -*- coding: utf-8 -*-
+
+import csv
+
+# chama os csv
+# cada linha do csv é uma list
+with open("/home/ana/natures/pokemon.csv") as csvfile:
+    pokemon = csv.reader(csvfile)
+    pokemon_list = list(pokemon)
+
+with open("/home/ana/natures/types.csv") as csvfile:
+    types = csv.reader(csvfile)
+    types_list = list(types)
+
+with open("/home/ana/natures/natures.csv") as csvfile:
+    natures = csv.reader(csvfile)
+    natures_list = list(natures)
+
+# busca qualquer informação nos csv
+
+
+def busca(csvfile, item):
+    print(csvfile[0])
+    for i in csvfile:
+        if item in i:
+            print(i)
+
+
+# busca(pokemon_list, "Venusaur")
+# busca(types_list, "Poison")
+# busca(natures_list, "Lonely")
+
+# monta dicionários de nature a partir do csvfile
+
+
+def makeadict(listadenatures):
+    a = listadenatures[0]
+    naturedicts = []
+    for i in listadenatures[1:]:
+        b = i
+        zipped = zip(a, b)
+        naturedict = {key: value for key, value in zipped}
+        naturedicts.append(naturedict)
+    return naturedicts
+
+
+natures_dict = makeadict(natures_list)
+
+
+def nature_oracle(poke):
+    # stats de interesse
+    standard = ["Attack", "Defense", "Speed"]
+    special = ["Sp. Atk", "Sp. Def", "Speed"]
+    # variáveis
+    data = []
+    caso = 0
+    moves = []
+    relevant = []
+    natures = []
+    faster = []
+    desired = []
+    neutral = []
+    undesired = []
+    # buscar pokémon, seu(s) tipo(s) e move(s)
+    for i in pokemon_list:
+        if poke in i:
+            data.append(i[1])
+            data.append(i[2])
+            data.append(i[3])
+    for i in data:
+        for j in types_list:
+            if i in j:
+                moves.append(j[1])
+    # o pokémon tem um move, dois moves iguais, ou dois moves diferentes?
+    if len(moves) == 1:
+        print(str(data[0]) + " is " + str(data[1]) + ". Let's see...")
+        print(" ")
+        caso = + 1
+    elif len(moves) == 2 and moves[0] != moves[1]:
+        print(str(data[0]) + " has two types: " + str(data[1]) +
+              " and " + str(data[2]) + ". Let's see...")
+        print(" ")
+        caso = + 2
+    else:
+        print(str(data[0]) + " has two types: " + str(data[1]) +
+              " and " + str(data[2]) + ". Let's see...")
+        print(" ")
+        caso = + 3
+    # se o pokémon tem um move só ou dois moves iguais, então...
+    if caso == 1 or caso == 3:
+        # qual tipo de move ele tem?
+        for i in data:
+            for j in types_list:
+                if i in j:
+                    moves.append(j[1])
+    # quais as stats relevantes?
+        for i in moves:
+            if "Standard" in i:
+                relevant.append(standard)
+            elif "Special" in i:
+                relevant.append(special)
+    # quais natures aumentam as stats relevantes?
+        for i in relevant:
+            for j in natures_dict:
+                if j["Increased"] in i:
+                    natures.append(j["Nature"])
+    # quais natures aumentam as stats relevantes - sem prejuízo?
+        for i in natures_dict:
+            a = i["Nature"]
+            if a in natures:
+                b = i["Increased"]
+                c = i["Decreased"]
+                if c == "Speed":
+                    undesired.append(a)
+                elif c == b:
+                    neutral.append(a)
+                elif str(c) not in relevant[0]:
+                    desired.append(a)
+                else:
+                    undesired.append(a)
+        print("These can make you stronger: " + str(desired[: 2]))
+        print("These can make you sturdier: " + str(desired[2: 4]))
+        print("These can improve speed: " + str(desired[-2:]))
+        print(" ")
+    # se o pokémon tem dois moves diferentes, então...
+    if caso == 2:
+        # qual é maior: attack ou sp. atk?
+        for i in pokemon_list:
+            if poke in i:
+                atk = float(i[6])
+                spatk = float(i[8])
+        if atk > spatk:
+            relevant.append(standard)
+            print("It's best to focus on Attack.")
+        elif spatk > atk:
+            relevant.append(special)
+            print("It's best to focus on Sp. Atk.")
+        else:
+            print("oopsie daisy")
+        # e agora segue com o mesmo código
+        for i in relevant:
+            for j in natures_dict:
+                if j["Increased"] in i:
+                    natures.append(j["Nature"])
+    # quais natures aumentam as stats relevantes - sem prejuízo?
+        for i in natures_dict:
+            a = i["Nature"]
+            if a in natures:
+                b = i["Increased"]
+                c = i["Decreased"]
+                if c == "Speed":
+                    undesired.append(a)
+                elif c == b:
+                    neutral.append(a)
+                elif str(c) not in relevant[0]:
+                    desired.append(a)
+                else:
+                    undesired.append(a)
+        print("These can make you stronger: " + str(desired[: 2]))
+        print("These can make you sturdier: " + str(desired[2: 4]))
+        print("These can improve speed: " + str(desired[-2:]))
+        print(" ")
+
+
+nature_oracle("Pikachu")
+nature_oracle("Meowth")
+nature_oracle("Beedrill")
+nature_oracle("Venusaur")
+
+# this is a test
