@@ -122,6 +122,8 @@ def nature_oracle(poke):
         print("These can make you sturdier: " + str(desired[2: 4]))
         print("These can improve speed: " + str(desired[-2:]))
         print(" ")
+        print("Remember: to choose a nature appropriately, one must think of the team as a whole!")
+        print(" ")
     # se o pokémon tem dois moves diferentes, então...
     if caso == 2:
         # qual é maior: attack ou sp. atk?
@@ -131,12 +133,10 @@ def nature_oracle(poke):
                 spatk = float(i[8])
         if atk > spatk:
             relevant.append(standard)
-            print("It's best to focus on Attack.")
+            print("Any nature would do - but since Attack > Sp. Atk.:")
         elif spatk > atk:
             relevant.append(special)
-            print("It's best to focus on Sp. Atk.")
-        else:
-            print("oopsie daisy")
+            print("Any nature would do - but since Sp. Atk > Attack:")
         # e agora segue com o mesmo código
         for i in relevant:
             for j in natures_dict:
@@ -160,13 +160,9 @@ def nature_oracle(poke):
         print("These can make you sturdier: " + str(desired[2: 4]))
         print("These can improve speed: " + str(desired[-2:]))
         print(" ")
+        print("Remember: to choose a nature appropriately, one must think of the team as a whole!")
+        print(" ")
 
 
-nature_oracle("Pikachu")
-nature_oracle("Meowth")
-nature_oracle("Beedrill")
-nature_oracle("Venusaur")
-
-
-# this is a test
-
+nature_oracle("Haunter")
+nature_oracle("Charizard")
